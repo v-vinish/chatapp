@@ -1,0 +1,182 @@
+:root {
+	--primary-color: #075e54;
+	--secondary-color: #25d366;
+	--bg-color: #ece5dd;
+	--chat-bg: #ffffff;
+	--message-bg: #dcf8c6;
+	--received-bg: #f1f0f0;
+	--text-color: #303030;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background-color: var(--bg-color);
+}
+
+.container {
+	display: flex;
+	height: 100vh;
+}
+
+.sidebar {
+	width: 300px;
+	background-color: #fff;
+	border-right: 1px solid #ccc;
+	display: flex;
+	flex-direction: column;
+}
+
+.sidebar-header {
+	padding: 15px;
+	background-color: var(--primary-color);
+	color: white;
+	font-weight: bold;
+	text-align: center;
+}
+
+.user-search {
+	padding: 10px;
+}
+
+.user-search input {
+	width: 100%;
+	padding: 10px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+}
+
+.users-list {
+	flex-grow: 1;
+	overflow-y: auto;
+}
+
+.user {
+	padding: 12px;
+	border-bottom: 1px solid #eee;
+	cursor: pointer;
+}
+
+.user:hover {
+	background-color: #f0f0f0;
+}
+
+.chat-window {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	background-color: var(--chat-bg);
+}
+
+.chat-header {
+	padding: 15px;
+	background-color: var(--primary-color);
+	color: white;
+	font-weight: bold;
+}
+
+.chat-messages {
+	flex-grow: 1;
+	padding: 20px;
+	overflow-y: auto;
+	background-color: #fafafa;
+}
+
+.message {
+	display: flex;
+	margin-bottom: 10px;
+}
+
+.message.sent {
+	justify-content: flex-end;
+}
+
+.message-content {
+	max-width: 60%;
+	padding: 10px 15px;
+	border-radius: 20px;
+}
+
+.message.sent .message-content {
+	background-color: var(--message-bg);
+}
+
+.message.received .message-content {
+	background-color: var(--received-bg);
+}
+
+.chat-input {
+	display: flex;
+	padding: 15px;
+	border-top: 1px solid #ccc;
+	background-color: white;
+}
+
+.chat-input input {
+	flex-grow: 1;
+	padding: 10px;
+	border-radius: 20px;
+	border: 1px solid #ccc;
+	margin-right: 10px;
+}
+
+.chat-input button {
+	background-color: var(--secondary-color);
+	color: white;
+	border: none;
+	border-radius: 20px;
+	padding: 10px 20px;
+	cursor: pointer;
+}
+
+.chat-input button:hover {
+	background-color: #20bd5e;
+}
+
+.logout-section {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+
+.logout-btn {
+    background-color: #dc3545;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background-color: #c82333;
+}
+
+.sent {
+    background: #dcf8c6;
+    align-self: flex-end;   /* This aligns your message to the right */
+}
+
+.received {
+    background: white;
+    align-self: flex-start; /* This aligns incoming messages to the left */
+}
+
+.sent::after {
+    content: "";
+    position: absolute;
+    right: -8px;
+    top: 10px;
+    border: 10px solid transparent;
+    border-left-color: #dcf8c6;
+}
+
+.received::after {
+    content: "";
+    position: absolute;
+    left: -8px;
+    top: 10px;
+    border: 10px solid transparent;
+    border-right-color: white;
+}

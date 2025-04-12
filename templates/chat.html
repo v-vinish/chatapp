@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LiveLang Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #ece5dd;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 25%;
+            background: #f8f9fa;
+            border-right: 1px solid #ccc;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .main-chat {
+            width: 75%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background: #075e54;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #d8dbd5;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-footer {
+            padding: 10px;
+            background: #f0f0f0;
+            display: flex;
+            border-top: 1px solid #ccc;
+        }
+
+        .chat-footer input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            margin-right: 10px;
+        }
+
+        .chat-footer button {
+            padding: 10px 20px;
+            border: none;
+            background: #128c7e;
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .friend-link {
+            display: block;
+            padding: 10px;
+            margin-bottom: 5px;
+            text-decoration: none;
+            color: #333;
+            background: #e2e2e2;
+            border-radius: 10px;
+        }
+
+        .friend-link:hover {
+            background: #ccc;
+        }
+
+        .message {
+            padding: 8px 12px;
+            margin: 8px 0;
+            border-radius: 10px;
+            max-width: 60%;
+        }
+
+        .sent {
+            background: #dcf8c6;
+            align-self: flex-end;
+        }
+
+        .received {
+            background: white;
+            align-self: flex-start;
+        }
+
+        .logout-btn {
+            margin-top: 20px;
+            padding: 10px 15px;
+            background: #d9534f;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: #c9302c;
+        }
+
+        .search-form input {
+            padding: 5px;
+            border: 1px solid #ccc;
+            margin-right: 5px;
+            border-radius: 5px;
+        }
+
+        .search-form button {
+            padding: 5px 10px;
+            background: #128c7e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="sidebar">
+        <h2>LiveLang</h2>
+        <form class="search-form" action="{{ url_for('search_user') }}" method="GET">
+            <input type="text" name="q" placeholder="Search username..." required>
+            <button type="submit">Search</button>
+        </form>
+
+        {% if friends %}
+            <h4>Chats</h4>
+            {% for friend in friends %}
+                <a class="friend-link" href="{{ url_for('chat_with_user', username=friend) }}">{{ friend }}</a>
+            {% endfor %}
+        {% else %}
+            <p>No friends connected.</p>
+        {% endif %}
+
+        <form action="{{ url_for('logout') }}" method="POST">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
+
+    <div class="main-chat">
+        {% if current_chat %}
+            <div class="chat-header">
+                Chatting with: {{ current_chat }}
+            </div>
+
+            <div class="chat-body" id="messages">
+                {% for msg in messages %}
+                    <div class="message {% if msg.sender == session['username'] %}sent{% else %}received{% endif %}">
+                        {{ msg.message }}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <form id="chat-form" class="chat-footer">
+                <input type="text" id="message" autocomplete="off" placeholder="Type a message..." required />
+                <button type="submit">Send</button>
+            </form>
+        {% else %}
+            <div class="chat-header">
+                Select a user to start chatting 💬
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if current_chat %}
+<script>
+    const socket = io();
+    const form = document.getElementById('chat-form');
+    const input = document.getElementById('message');
+    const messages = document.getElementById('messages');
+
+    const sender = "{{ session['username'] }}";
+    const receiver = "{{ current_chat }}";
+
+    socket.emit('join', { sender, receiver });
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (input.value.trim()) {
+            const message = input.value;
+            socket.emit('private_message', {
+                sender: sender,
+                receiver: receiver,
+                message: message
+            });
+
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('message', 'sent');
+            msgDiv.textContent = message;
+            messages.appendChild(msgDiv);
+            messages.scrollTop = messages.scrollHeight;
+            input.value = '';
+        }
+    });
+
+    socket.on('new_private_message', function(data) {
+        if (data.sender === receiver) {
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('message', 'received');
+            msgDiv.textContent = data.message;
+            messages.appendChild(msgDiv);
+            messages.scrollTop = messages.scrollHeight;
+        }
+    });
+</script>
+{% endif %}
+
+</body>
+</html>

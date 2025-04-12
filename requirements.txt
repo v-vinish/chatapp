@@ -1,0 +1,6 @@
+flask
+flask-socketio
+flask-pymongo
+eventlet
+dnspython
+werkzeug
