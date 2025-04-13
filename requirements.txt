@@ -1,6 +1,7 @@
-flask
-flask-socketio
-flask-pymongo
-eventlet
-dnspython
-werkzeug
+Flask==2.3.3
+Flask-SocketIO==5.3.6
+flask-pymongo==2.3.0
+pymongo==4.6.1
+dnspython==2.4.2
+eventlet==0.33.3
+Werkzeug==2.3.8

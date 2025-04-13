@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - LIVE LANG</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8f2f2;
+        }
+
+        .profile-container {
+            display: flex;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Left Side - User Info */
+        .user-info {
+            width: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-right: 20px;
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .profile-picture img {
+            width: 70px;
+            height: 70px;
+        }
+
+        .user-details {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .username {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .user-metadata {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .edit-btn {
+            background-color: #ff3a3a;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 5px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        /* Right Side - User Details */
+        .user-details-section {
+            flex: 1;
+        }
+
+        .detail-item {
+            margin-bottom: 30px;
+        }
+
+        .detail-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .detail-content {
+            border-bottom: 1px dotted #000;
+            padding-bottom: 5px;
+            min-height: 20px;
+        }
+
+        /* Photo Grid */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .photo-item {
+            aspect-ratio: 1/1;
+            border: 1px solid #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+        }
+
+        .photo-item img {
+            width: 50%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <!-- Left Side - User Info -->
+        <div class="user-info">
+            <div class="profile-picture">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1jYW1lcmEiPjxwYXRoIGQ9Ik0xNC4yNSA4LjVhLjI1LjI1IDAgMCAwLS4yNS4yNSIvPjxwYXRoIGQ9Ik0xNCA4Ljc1YS4yNS4yNSAwIDAgMCAuMjUuMjUiLz48cGF0aCBkPSJNMTQuMjUgOWEuMjUuMjUgMCAwIDAgLjI1LS4yNSIvPjxwYXRoIGQ9Ik0xNC41IDguNzVhLjI1LjI1IDAgMCAwLS4yNS0uMjUiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEzIiByPSIzIi8+PHBhdGggZD0iTTYgOGgybDEtMmgyaDF2MGg0bDEgMmgyYTIgMiAwIDAgMSAyIDJ2OGEyIDIgMCAwIDEtMiAySDZhMiAyIDAgMCAxLTItMnYtOGEyIDIgMCAwIDEgMi0yIi8+PC9zdmc+" alt="Camera Icon">
+            </div>
+            <div class="user-details">
+                <div class="username">UserName</div>
+                <div class="user-metadata">
+                    <span>Age</span>
+                    <span>GENDER</span>
+                </div>
+            </div>
+            <button class="edit-btn">Edit</button>
+        </div>
+
+        <!-- Right Side - User Details -->
+        <div class="user-details-section">
+            <div class="detail-item">
+                <div class="detail-title">bio</div>
+                <div class="detail-content"></div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-title">known languages</div>
+                <div class="detail-content"></div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-title">looking for</div>
+                <div class="detail-content"></div>
+            </div>
+
+            <!-- Photo Grid -->
+            <div class="photo-grid">
+                <!-- Row 1 -->
+                <div class="photo-item">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1jYW1lcmEiPjxwYXRoIGQ9Ik0xNC4yNSA4LjVhLjI1LjI1IDAgMCAwLS4yNS4yNSIvPjxwYXRoIGQ9Ik0xNCA4Ljc1YS4yNS4yNSAwIDAgMCAuMjUuMjUiLz48cGF0aCBkPSJNMTQuMjUgOWEuMjUuMjUgMCAwIDAgLjI1LS4yNSIvPjxwYXRoIGQ9Ik0xNC41IDguNzVhLjI1LjI1IDAgMCAwLS4yNS0uMjUiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEzIiByPSIzIi8+PHBhdGggZD0iTTYgOGgybDEtMmgyaDF2MGg0bDEgMmgyYTIgMiAwIDAgMSAyIDJ2OGEyIDIgMCAwIDEtMiAySDZhMiAyIDAgMCAxLTItMnYtOGEyIDIgMCAwIDEgMi0yIi8+PC9zdmc+" alt="Camera Icon">
+                </div>
+                <div class="photo-item">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1jYW1lcmEiPjxwYXRoIGQ9Ik0xNC4yNSA4LjVhLjI1LjI1IDAgMCAwLS4yNS4yNSIvPjxwYXRoIGQ9Ik0xNCA4Ljc1YS4yNS4yNSAwIDAgMCAuMjUuMjUiLz48cGF0aCBkPSJNMTQuMjUgOWEuMjUuMjUgMCAwIDAgLjI1LS4yNSIvPjxwYXRoIGQ9Ik0xNC41IDguNzVhLjI1LjI1IDAgMCAwLS4yNS0uMjUiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEzIiByPSIzIi8+PHBhdGggZD0iTTYgOGgybDEtMmgyaDF2MGg0bDEgMmgyYTIgMiAwIDAgMSAyIDJ2OGEyIDIgMCAwIDEtMiAySDZhMiAyIDAgMCAxLTItMnYtOGEyIDIgMCAwIDEgMi0yIi8+PC9zdmc+" alt="Camera Icon">
+                </div>
+                <div class="photo-item">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1jYW1lcmEiPjxwYXRoIGQ9Ik0xNC4yNSA4LjVhLjI1LjI1IDAgMCAwLS4yNS4yNSIvPjxwYXRoIGQ9Ik0xNCA4Ljc1YS4yNS4yNSAwIDAgMCAuMjUuMjUiLz48cGF0aCBkPSJNMTQuMjUgOWEuMjUuMjUgMCAwIDAgLjI1LS4yNSIvPjxwYXRoIGQ9Ik0xNC41IDguNzVhLjI1LjI1IDAgMCAwLS4yNS0uMjUiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEzIiByPSIzIi8+PHBhdGggZD0iTTYgOGgybDEtMmgyaDF2MGg0bDEgMmgyYTIgMiAwIDAgMSAyIDJ2OGEyIDIgMCAwIDEtMiAySDZhMiAyIDAgMCAxLTItMnYtOGEyIDIgMCAwIDEgMi0yIi8+PC9zdmc+" alt="Camera Icon">
+                </div>
+                
+                <!-- Row 2 -->
+                <div class="photo-item">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1jYW1lcmEiPjxwYXRoIGQ9Ik0xNC4yNSA4LjVhLjI1LjI1IDAgMCAwLS4yNS4yNSIvPjxwYXRoIGQ9Ik0xNCA4Ljc1YS4yNS4yNSAwIDAgMCAuMjUuMjUiLz48cGF0aCBkPSJNMTQuMjUgOWEuMjUuMjUgMCAwIDAgLjI1LS4yNSIvPjxwYXRoIGQ9Ik0xNC41IDguNzVhLjI1LjI1IDAgMCAwLS4yNS0uMjUiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEzIiByPSIzIi8+PHBhdGggZD0iTTYgOGgybDEtMmgyaDF2MGg0bDEgMmgyYTIgMiAwIDAgMSAyIDJ2OGEyIDIgMCAwIDEtMiAySDZhMiAyIDAgMCAxLTItMnYtOGEyIDIgMCAwIDEgMi0yIi8+PC9zdmc+" alt="Camera Icon">
+                </div>
+                <div class="photo-item">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1jYW1lcmEiPjxwYXRoIGQ9Ik0xNC4yNSA4LjVhLjI1LjI1IDAgMCAwLS4yNS4yNSIvPjxwYXRoIGQ9Ik0xNCA4Ljc1YS4yNS4yNSAwIDAgMCAuMjUuMjUiLz48cGF0aCBkPSJNMTQuMjUgOWEuMjUuMjUgMCAwIDAgLjI1LS4yNSIvPjxwYXRoIGQ9Ik0xNC41IDguNzVhLjI1LjI1IDAgMCAwLS4yNS0uMjUiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEzIiByPSIzIi8+PHBhdGggZD0iTTYgOGgybDEtMmgyaDF2MGg0bDEgMmgyYTIgMiAwIDAgMSAyIDJ2OGEyIDIgMCAwIDEtMiAySDZhMiAyIDAgMCAxLTItMnYtOGEyIDIgMCAwIDEgMi0yIi8+PC9zdmc+" alt="Camera Icon">
+                </div>
+                <div class="photo-item">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1jYW1lcmEiPjxwYXRoIGQ9Ik0xNC4yNSA4LjVhLjI1LjI1IDAgMCAwLS4yNS4yNSIvPjxwYXRoIGQ9Ik0xNCA4Ljc1YS4yNS4yNSAwIDAgMCAuMjUuMjUiLz48cGF0aCBkPSJNMTQuMjUgOWEuMjUuMjUgMCAwIDAgLjI1LS4yNSIvPjxwYXRoIGQ9Ik0xNC41IDguNzVhLjI1LjI1IDAgMCAwLS4yNS0uMjUiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEzIiByPSIzIi8+PHBhdGggZD0iTTYgOGgybDEtMmgyaDF2MGg0bDEgMmgyYTIgMiAwIDAgMSAyIDJ2OGEyIDIgMCAwIDEtMiAySDZhMiAyIDAgMCAxLTItMnYtOGEyIDIgMCAwIDEgMi0yIi8+PC9zdmc+" alt="Camera Icon">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

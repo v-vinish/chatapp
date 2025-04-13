@@ -4,6 +4,8 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+import requests
+from random import sample
 
 app = Flask(__name__)
 app.secret_key = "secret_key"
@@ -14,6 +16,24 @@ socketio = SocketIO(app)
 connected_users = {}  # sid -> username
 user_rooms = {}       # username -> room_id
 
+# Function to translate messages using LibreTranslate
+def translate_text(text, target_language='en', source_language=None):
+    url = 'https://libretranslate.de/translate'
+    
+    data = {
+        'q': text,
+        'source': source_language if source_language else 'auto',  # auto-detect source language
+        'target': target_language,
+        'format': 'text'
+    }
+    
+    response = requests.post(url, data=data)
+    
+    if response.status_code == 200:
+        return response.json()['translatedText']
+    else:
+        return None  # Handle error if translation fails
+
 # Dummy friends for now (can be replaced with real friend system)
 def get_friends(username):
     all_users = mongo.db.users.find({}, {"_id": 0, "username": 1})
@@ -22,7 +42,7 @@ def get_friends(username):
 @app.route('/')
 def home():
     if 'username' in session:
-        return redirect(url_for('chat'))
+        return redirect(url_for('home_page'))  # <-- This will take them to home.html
     return render_template("login.html")
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -48,9 +68,38 @@ def login():
         user = mongo.db.users.find_one({"username": username})
         if user and check_password_hash(user['password'], password):
             session['username'] = username
-            return redirect(url_for('chat'))
+            return redirect(url_for('home_page'))
         flash("Invalid credentials")
     return render_template("login.html")
+
+from random import sample
+
+@app.route('/home')
+def home_page():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+
+    current_user = session['username']
+    
+    # Get all other users except the current one
+    all_users = list(mongo.db.users.find({"username": {"$ne": current_user}}, {
+        "_id": 0, "username": 1, "age": 1, "gender": 1
+    }))
+
+    # Randomly pick 6 users
+    random_users = sample(all_users, min(6, len(all_users)))
+
+    return render_template("home.html", username=current_user, users=random_users)
+
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
+
+@app.route('/settings')
+def settings():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    return render_template("settings.html")
 
 @app.route('/logout', methods=['POST'])
 def logout():
@@ -110,27 +159,33 @@ def handle_private_message(data):
     message = data['message']
     timestamp = datetime.utcnow()
 
-    # Save message to MongoDB
+    # Translate the message (to English for example)
+    translated_message = translate_text(message, target_language='en')
+
+    # Save message to MongoDB (both original and translated)
     mongo.db.messages.insert_one({
         "sender": sender,
         "receiver": receiver,
         "message": message,
+        "translated_message": translated_message,  # Save translated message
         "timestamp": timestamp
     })
 
-    # Send message to receiver if connected
+    # Send the translated message to the receiver if connected
     room = user_rooms.get(receiver)
     if room:
         emit("new_private_message", {
             "sender": sender,
-            "message": message,
+            "message": translated_message,  # Send translated message
+            "original_message": message,   # Optionally send original message
             "timestamp": timestamp.isoformat()
         }, room=room)
 
     # Also send to sender for confirmation
     emit("new_private_message", {
         "sender": sender,
-        "message": message,
+        "message": translated_message,
+        "original_message": message,   # Optionally send original message
         "timestamp": timestamp.isoformat()
     }, room=request.sid)
 

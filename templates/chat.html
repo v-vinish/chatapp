@@ -102,6 +102,12 @@
             align-self: flex-start;
         }
 
+        .translated {
+            font-style: italic;
+            color: #888;
+            margin-top: 4px;
+        }
+
         .logout-btn {
             margin-top: 20px;
             padding: 10px 15px;
@@ -151,9 +157,7 @@
             <p>No friends connected.</p>
         {% endif %}
 
-        <form action="{{ url_for('logout') }}" method="POST">
-            <button type="submit" class="logout-btn">Logout</button>
-        </form>
+       
     </div>
 
     <div class="main-chat">
@@ -166,6 +170,9 @@
                 {% for msg in messages %}
                     <div class="message {% if msg.sender == session['username'] %}sent{% else %}received{% endif %}">
                         {{ msg.message }}
+                        {% if msg.translated_message %}
+                            <div class="translated">Translated: {{ msg.translated_message }}</div>
+                        {% endif %}
                     </div>
                 {% endfor %}
             </div>
@@ -218,6 +225,14 @@
             const msgDiv = document.createElement('div');
             msgDiv.classList.add('message', 'received');
             msgDiv.textContent = data.message;
+
+            if (data.translated_message) {
+                const translatedDiv = document.createElement('div');
+                translatedDiv.classList.add('translated');
+                translatedDiv.textContent = `Translated: ${data.translated_message}`;
+                msgDiv.appendChild(translatedDiv);
+            }
+
             messages.appendChild(msgDiv);
             messages.scrollTop = messages.scrollHeight;
         }
